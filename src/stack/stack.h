@@ -94,7 +94,7 @@ int64_t stack_peek (stack stk);
 bool stack_print (stack stk);
 
 /**
- * @brief True is empty
+ * @brief True if empty
  *
  * @param stack Pointer to stack struct
  * @return bool -- True if empty

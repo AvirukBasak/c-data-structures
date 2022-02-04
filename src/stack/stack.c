@@ -29,7 +29,7 @@ bool stack_push (stack stk, int64_t element)
 {
     if (stk == NULL)
         return false;
-    stk->element = realloc (stk->element, ++(stk->length) * sizeof (stk->element));
+    stk->element = realloc (stk->element, ++(stk->length) * sizeof (stk->element[0]));
     if (stk->element == NULL)
         return false;
     if (stk->length > 1)
@@ -69,7 +69,7 @@ int64_t stack_pop (stack stk)
         free (stk->element);
         stk->element = NULL;
     } else {
-        stk->element = realloc (stk->element, (stk->length) * sizeof (stk->element));
+        stk->element = realloc (stk->element, (stk->length) * sizeof (stk->element[0]));
     }
     return element;
 }
@@ -118,14 +118,14 @@ bool stack_print (stack stk)
 }
 
 /**
- * @brief True is empty
+ * @brief True if empty
  *
  * @param stack The stack
  * @return bool -- True if empty
  */
 bool stack_isempty (stack stk)
 {
-    return stk->top == 0 && stk->length == 1;
+    return stk->top == 0 && stk->length == 0;
 }
 
 /**
@@ -142,6 +142,8 @@ bool stack_isempty (stack stk)
  */
 void stack_delete (stack *stk)
 {
+    if (*stk == NULL || stk == NULL)
+        return;
     free (*stk);
     *stk = NULL;
 }
