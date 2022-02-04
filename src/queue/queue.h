@@ -30,6 +30,7 @@ struct _queue {
  * // avoid accessing following queue members
  * que->front;      // queue front
  * que->rear;       // queue rear
+ * que->length      // queue length
  * que->elements;   // queue elements array
  */
 typedef struct _queue *queue;
