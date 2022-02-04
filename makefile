@@ -31,8 +31,8 @@ options:
 # required stuff
 CC        = gcc
 DBG       = gdb
-DBG_FLAGS = -D DEBUG="(1)" -g3 -ggdb
-REL_FLAGS = -Ofast
+DBG_FLAGS = -Wall -D DEBUG="(1)" -g3 -ggdb
+REL_FLAGS = -Wall -Ofast
 
 SRC_DIR   = ./src
 BIN_DIR   = ./bin
