@@ -13,12 +13,19 @@ cf: cleanf
 # options for make
 options:
 	$(info USAGE:)
-	$(info $(TAB)make  o | options)
-	$(info $(TAB)make  d | debug src="sourcepath")
-	$(info $(TAB)make  b | build src="sourcepath")
-	$(info $(TAB)make  r | run bin="binpath")
-	$(info $(TAB)make  c | clean)
+	$(info $(TAB)make o  | options)
+	$(info $(TAB)make d  | debug src="sourcedir")
+	$(info $(TAB)make b  | build src="sourcedir")
+	$(info $(TAB)make r  | run bin="binpath")
+	$(info $(TAB)make c  | clean)
 	$(info $(TAB)make cf | cleanf)
+	$(info EXAMPLES:)
+	$(info $(TAB)make o)
+	$(info $(TAB)make d src=stack)
+	$(info $(TAB)make b src=stack)
+	$(info $(TAB)make r bin=stack)
+	$(info $(TAB)make c)
+	$(info $(TAB)make cf)
 	@exit
 
 # required stuff
@@ -46,22 +53,22 @@ endif
 
 # create binary path
 make_dbg_path:
-DBG_PATH = $(BIN_DIR)/dbg/dbg-$(shell basename $(src) .c)
+DBG_PATH = $(BIN_DIR)/dbg/dbg-$(src)
 
 # creates debug build and launches in gdb
 debug: src_set clscr make_dbg_path
 	mkdir -p $(BIN_DIR)/dbg
-	$(CC) $(DBG_FLAGS) $(src) -o $(DBG_PATH)
+	$(CC) $(DBG_FLAGS) $(SRC_DIR)/$(src)/*.c -o $(DBG_PATH)
 	$(DBG) $(DBG_PATH)
 
 # create binary path
 make_rel_path:
-REL_PATH = $(BIN_DIR)/rel/$(shell basename $(src) .c)
+REL_PATH = $(BIN_DIR)/rel/$(src)
 
 # compile source to bin path
 build: src_set clscr make_rel_path
 	mkdir -p $(BIN_DIR)/rel
-	$(CC) $(REL_FLAGS) $(src) -o $(REL_PATH)
+	$(CC) $(REL_FLAGS) $(SRC_DIR)/$(src)/*.c -o $(REL_PATH)
 
 # if bin path isn't set, exit
 bin_set:
@@ -75,9 +82,9 @@ bin_prefix = $(shell echo $(bin) | head -c 4)
 # run source
 run: bin_set
 ifeq ($(bin_prefix), dbg-)
-	@./$(BIN_DIR)/dbg/$(bin)
+	@$(BIN_DIR)/dbg/$(bin)
 else
-	@./$(BIN_DIR)/rel/$(bin)
+	@$(BIN_DIR)/rel/$(bin)
 endif
 
 # clear binaries
