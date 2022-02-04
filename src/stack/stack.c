@@ -3,7 +3,9 @@
 # include "stack.h"
 
 /**
- * @brief Allocates a new stack in the heap. Remember to free the stack.
+ * @brief Allocates a new stack in the heap
+ *
+ * Remember to free the stack using stack_delete (&stk);
  *
  * @return stack The stack
  */
@@ -19,7 +21,7 @@ stack new_stack ()
 }
 
 /**
- * @brief Pushes a value to the stack and returns true.
+ * @brief Pushes a value to the stack and returns true
  *
  * @param stack The stack
  * @param int64_t Value to push
@@ -39,7 +41,7 @@ bool stack_push (stack stk, int64_t element)
 }
 
 /**
- * @brief Pops a value from stack and returns it.
+ * @brief Pops a value from stack and returns it
  *
  * If pop fails, STACK_UNDERFLOW  value is returned.
  *
@@ -138,7 +140,7 @@ bool stack_isempty (stack stk)
  * might forget to set stack pointer to NULL. As a result,
  * another stack operation will cause some undefined behaviour.
  *
- * @param stack* Pointer to the stack, is set to NULL.
+ * @param stack* Reference to the stack, is set to NULL.
  */
 void stack_delete (stack *stk)
 {

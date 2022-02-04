@@ -3,7 +3,9 @@
 # include "list.h"
 
 /**
- * @brief Allocates a new list in the heap. Remember to free the list.
+ * @brief Allocates a new list in the heap
+ *
+ * Remember to free the list using list_delete (&lst);
  *
  * @return list The list
  */
@@ -34,7 +36,7 @@ uint64_t list_getlen (list lst)
 }
 
 /**
- * @brief Pushes a value to the list and returns true.
+ * @brief Pushes a value to the list and returns true
  *
  * @param list The list
  * @param int64_t Value to push
@@ -54,7 +56,7 @@ bool list_push (list lst, int64_t element)
 }
 
 /**
- * @brief Pops a value from list and returns it.
+ * @brief Pops a value from list and returns it
  *
  * If pop fails, LIST_UNDERFLOW  value is returned.
  *
@@ -194,7 +196,7 @@ bool list_isempty (list lst)
  * might forget to set list pointer to NULL. As a result,
  * another list operation will cause some undefined behaviour.
  *
- * @param list* Pointer to the list, is set to NULL.
+ * @param list* Reference to the list, is set to NULL.
  */
 void list_delete (list *lst)
 {

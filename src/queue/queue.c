@@ -3,7 +3,9 @@
 # include "queue.h"
 
 /**
- * @brief Allocates a new queue in the heap. Remember to free the queue.
+ * @brief Allocates a new queue in the heap
+ *
+ * Remember to free the queue using queue_delete (&que);
  *
  * @return queue The queue
  */
@@ -20,7 +22,7 @@ queue new_queue ()
 }
 
 /**
- * @brief Pushes a value to the queue and returns true.
+ * @brief Pushes a value to the queue and returns true
  *
  * @param queue The queue
  * @param int64_t Value to push
@@ -40,7 +42,7 @@ bool queue_push (queue que, int64_t element)
 }
 
 /**
- * @brief Pops a value from queue and returns it.
+ * @brief Pops a value from queue and returns it
  *
  * If pop fails, QUEUE_UNDERFLOW  value is returned.
  *
@@ -144,7 +146,7 @@ bool queue_isempty (queue que)
  * might forget to set queue pointer to NULL. As a result,
  * another queue operation will cause some undefined behaviour.
  *
- * @param queue* Pointer to the queue, is set to NULL.
+ * @param queue* Reference to the queue, is set to NULL.
  */
 void queue_delete (queue *que)
 {

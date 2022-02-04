@@ -20,12 +20,17 @@ struct _list {
  * list lst = new_list ();
  *
  * //functions
+ * uint64_t list_getlen (list lst);
  * bool list_push (list lst, int64_t element);
  * int64_t list_pop (list lst);
  * int64_t list_peek (list lst);
- * int64_t list_peek (list lst);
+ * int64_t list_get (list lst, uint64_t index);
+ * bool list_set (list lst, uint64_t index, int64_t value);
  * bool list_print (list lst);
  * bool list_isempty (list lst);
+ *
+ * // deleting list
+ * void list_delete (list *lst);
  *
  * // avoid accessing following list members
  * lst->top;        // list top
@@ -35,9 +40,11 @@ struct _list {
 typedef struct _list *list;
 
 /**
- * @brief Allocates a new list in the heap. Remember to free the list.
+ * @brief Allocates a new list in the heap
  *
- * @return list Pointer to list struct
+ * Remember to free the list using list_delete (&lst);
+ *
+ * @return list The list
  */
 list new_list ();
 
@@ -148,7 +155,7 @@ bool list_isempty (list lst);
  * might forget to set list pointer to NULL. As a result,
  * another list operation will cause some undefined behaviour.
  *
- * @param list* Pointer to the list, is set to NULL.
+ * @param list* Reference to the list, is set to NULL.
  */
 void list_delete (list *lst);
 
