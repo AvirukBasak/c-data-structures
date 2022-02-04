@@ -104,9 +104,14 @@ bool stack_isempty (stack stk);
 /**
  * @brief Deletes a stack
  *
- * This function is basically a wrapper around free()
+ * This function is basically a wrapper around free().
+ * Also sets stack pointer to NULL.
  *
- * @param stack Pointer to stack struct
+ * This function is recommended over free as the programmer
+ * might forget to set stack pointer to NULL. As a result,
+ * another stack operation will cause some undefined behaviour.
+ *
+ * @param stack* Pointer to the stack, is set to NULL.
  */
 void stack_delete (stack *stk);
 

@@ -111,9 +111,9 @@ bool stack_print (stack stk)
     if (stk->element == NULL)
         return false;
     for (uint64_t i = 0; i < stk->length; i++) {
-        printf ("%ld ", stk->element[i]);
+        printf ("%ld%s", stk->element[i], i == stk->top ? ":TOP" : " ");
     }
-    printf (":TOP\n");
+    printf ("\n");
     return true;
 }
 
@@ -131,7 +131,12 @@ bool stack_isempty (stack stk)
 /**
  * @brief Deletes a stack
  *
- * This function is basically a wrapper around free()
+ * This function is basically a wrapper around free().
+ * Also sets stack pointer to NULL.
+ *
+ * This function is recommended over free as the programmer
+ * might forget to set stack pointer to NULL. As a result,
+ * another stack operation will cause some undefined behaviour.
  *
  * @param stack* Pointer to the stack, is set to NULL.
  */
