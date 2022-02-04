@@ -36,14 +36,14 @@ typedef struct _stack *stack;
 /**
  * @brief Allocates a new stack in the heap. Remember to free the stack.
  *
- * @return stack* Pointer to stack struct
+ * @return stack Pointer to stack struct
  */
 stack new_stack ();
 
 /**
  * @brief Pushes a value to the stack and returns true.
  *
- * @param stack* Pointer to stack struct
+ * @param stack Pointer to stack struct
  * @param int64_t Value to push
  * @return bool -- true if successful
  */
@@ -63,7 +63,7 @@ bool stack_push (stack stk, int64_t element);
  *
  * Thus, you should know: STACK_UNDERFLOW = 0x0123456789abcdeful
  *
- * @param stack* Pointer to stack struct
+ * @param stack Pointer to stack struct
  * @return int64_t -- Popped value, if failed, STACK_UNDERFLOW  is returned
  */
 int64_t stack_pop (stack stk);
@@ -80,7 +80,7 @@ int64_t stack_pop (stack stk);
  *
  * Thus, you should know: STACK_UNDERFLOW = 0x0123456789abcdeful
  *
- * @param stack* Pointer to stack struct
+ * @param stack Pointer to stack struct
  * @return int64_t -- Peeked value, if failed, STACK_UNDERFLOW  is returned
  */
 int64_t stack_peek (stack stk);
@@ -88,7 +88,7 @@ int64_t stack_peek (stack stk);
 /**
  * @brief Prints stack content
  *
- * @param stack* Pointer to stack struct
+ * @param stack Pointer to stack struct
  * @return bool -- false if print failed
  */
 bool stack_print (stack stk);
@@ -96,7 +96,7 @@ bool stack_print (stack stk);
 /**
  * @brief True is empty
  *
- * @param stack* Pointer to stack struct
+ * @param stack Pointer to stack struct
  * @return bool -- True if empty
  */
 bool stack_isempty (stack stk);
