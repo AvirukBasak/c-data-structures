@@ -42,10 +42,9 @@ typedef struct _llist_node {
  * void llist_delete (llist *llst);
  *
  * // avoid accessing following llist members
- * llst->len;        // llist length
- * llst->prev;       // llist prev
- * llst->next;       // llist next
- * llst->elements;   // llist element
+ * llst->start;        // llist length
+ * llst->end;          // llist prev
+ * llst->length;       // llist next
  */
 typedef _llist_metanode llist;
 
