@@ -116,7 +116,7 @@ int64_t llist_peek (llist llst);
  * @brief Inserts a value to the llist index and returns true.
  *
  * @param llist Pointer to llist struct
- * @param int64_t Index to where value is to be inserted
+ * @param uint64_t Index to where value is to be inserted
  * @param int64_t Value to insert
  * @return bool -- true if successful
  */
@@ -137,7 +137,7 @@ bool llist_insert (llist llst, uint64_t index, int64_t element);
  * Thus, you should know: LLIST_UNDERFLOW = 0x0123456789abcdeful
  *
  * @param llist Pointer to llist struct
- * @param int64_t Index from where element is to be removed
+ * @param uint64_t Index from where element is to be removed
  * @return int64_t -- Popped value, if failed, LLIST_UNDERFLOW  is returned
  */
 int64_t llist_remove (llist llst, uint64_t index);
