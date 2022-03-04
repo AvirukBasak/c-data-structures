@@ -56,6 +56,27 @@ bool list_push (list lst, int64_t element)
 }
 
 /**
+ * @brief Inserts a value to a list index and returns true
+ *
+ * @param list The list
+ * @param int64_t Value to insert
+ * @param uint64_t Where to insert
+ * @return bool -- true if successful
+ */
+bool list_insert (list lst, uint64_t index, int64_t element)
+{
+    if (lst == NULL)
+        return false;
+    lst->element = realloc (lst->element, ++(lst->length) * sizeof (lst->element[0]));
+    if (lst->element == NULL)
+        return false;
+    if (lst->length > 1)
+        lst->top++;
+    lst->element[lst->top] = element;
+    return true;
+}
+
+/**
  * @brief Pops a value from list and returns it
  *
  * If pop fails, LIST_UNDERFLOW  value is returned.
