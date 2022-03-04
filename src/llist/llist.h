@@ -31,8 +31,8 @@ typedef struct _llist_node {
  * bool llist_push (llist llst, int64_t element);
  * int64_t llist_pop (llist llst);
  * int64_t llist_peek (llist llst);
- * bool llist_insert (llist llst, int64_t index, int64_t element);
- * int64_t llist_remove (llist llst, int64_t index);
+ * bool llist_insert (llist llst, uint64_t index, int64_t element);
+ * int64_t llist_remove (llist llst, uint64_t index);
  * int64_t llist_get (llist llst, uint64_t index);
  * bool llist_set (llist llst, uint64_t index, int64_t value);
  * bool llist_print (llist llst);
@@ -120,7 +120,7 @@ int64_t llist_peek (llist llst);
  * @param int64_t Value to insert
  * @return bool -- true if successful
  */
-bool llist_insert (llist llst, int64_t index, int64_t element);
+bool llist_insert (llist llst, uint64_t index, int64_t element);
 
 /**
  * @brief Removes a value from llist index and returns it.
@@ -140,7 +140,7 @@ bool llist_insert (llist llst, int64_t index, int64_t element);
  * @param int64_t Index from where element is to be removed
  * @return int64_t -- Popped value, if failed, LLIST_UNDERFLOW  is returned
  */
-int64_t llist_remove (llist llst, int64_t index);
+int64_t llist_remove (llist llst, uint64_t index);
 
 /**
  * @brief Gets value from an index of llist

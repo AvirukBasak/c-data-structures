@@ -44,17 +44,23 @@ uint64_t llist_getlen (llist llst)
  */
 bool llist_push (llist llst, int64_t element)
 {
+    if (llst == NULL)
+        return false;
     _llist_node newnode = malloc (1 * sizeof (_llist_node));
     if (newnode == NULL)
         return false;
     if (llst->length == 0)
         llst->start = newnode;
-    if (llst->length > 0)
+    if (llst->length > 0) {
+        newnode->prev = llst->end;
         llst->end->next = newnode;
-    llst->end = newnode;
-    llst->length++;
+    } else {
+        newnode->prev = NULL;
+    }
     newnode->next = NULL;
     newnode->element = element;
+    llst->end = newnode;
+    llst->length++;
     return true;
 }
 
@@ -77,8 +83,14 @@ bool llist_push (llist llst, int64_t element)
  */
 int64_t llist_pop (llist llst)
 {
-    if (llst == NULL || llst->length == 0)
+    if (llist_isempty(llst))
         return LLIST_UNDERFLOW;
+    _llist_node node_to_pop = llst->end;
+    int64_t return_val = node_to_pop->element;
+    llst->end->prev->next = NULL;
+    llst->end = llst->end->prev;
+    free (node_to_pop);
+    return return_val;
 }
 
 /**
@@ -98,7 +110,7 @@ int64_t llist_pop (llist llst)
  */
 int64_t llist_peek (llist llst)
 {
-    if (llst == NULL || llst->length == 0)
+    if (llist_isempty(llst))
         return LLIST_UNDERFLOW;
     return llst->end->element;
 }
@@ -107,13 +119,13 @@ int64_t llist_peek (llist llst)
  * @brief Inserts a value to the llist index and returns true.
  *
  * @param llist Pointer to llist struct
- * @param int64_t Index to where value is to be inserted
+ * @param uint64_t Index to where value is to be inserted
  * @param int64_t Value to insert
  * @return bool -- true if successful
  */
-bool llist_insert (llist llst, int64_t index, int64_t element)
+bool llist_insert (llist llst, uint64_t index, int64_t element)
 {
-    
+    return false;
 }
 
 /**
@@ -131,12 +143,12 @@ bool llist_insert (llist llst, int64_t index, int64_t element)
  * Thus, you should know: LLIST_UNDERFLOW = 0x0123456789abcdeful
  *
  * @param llist Pointer to llist struct
- * @param int64_t Index from where element is to be removed
+ * @param uint64_t Index from where element is to be removed
  * @return int64_t -- Popped value, if failed, LLIST_UNDERFLOW  is returned
  */
-int64_t llist_remove (llist llst, int64_t index)
+int64_t llist_remove (llist llst, uint64_t index)
 {
-    
+    return 0;
 }
 
 /**
@@ -155,7 +167,18 @@ int64_t llist_remove (llist llst, int64_t index)
  */
 int64_t llist_get (llist llst, uint64_t index)
 {
-    
+    if (llist_isempty(llst) || index < 0)
+        return LLIST_UNDERFLOW;
+    if (index > llst->length)
+        return LLIST_OUTOFBOUNDS;
+    _llist_node next_node = llst->start;
+    for (uint64_t i = 0; i < llst->length; i++) {
+        if (i != index)
+            next_node = next_node->next;
+        else
+            break;
+    }
+    return next_node->element;
 }
 
 /**
@@ -168,7 +191,18 @@ int64_t llist_get (llist llst, uint64_t index)
  */
 bool llist_set (llist llst, uint64_t index, int64_t value)
 {
-    
+    if (llist_isempty(llst) || index < 0)
+        return false;
+    if (index > llst->length)
+        return false;
+    _llist_node next_node = llst->start;
+    for (uint64_t i = 0; i < llst->length; i++) {
+        if (i != index)
+            next_node = next_node->next;
+        else
+            next_node->element = value;
+    }
+    return true;
 }
 
 /**
@@ -179,7 +213,15 @@ bool llist_set (llist llst, uint64_t index, int64_t value)
  */
 bool llist_print (llist llst)
 {
-    
+    if (llist_isempty(llst))
+        return false;
+    _llist_node next_node = llst->start;
+    while (next_node != NULL) {
+        printf ("%ld ", next_node->element);
+        next_node = next_node->next;
+    }
+    printf ("\n");
+    return true;
 }
 
 /**
@@ -190,7 +232,7 @@ bool llist_print (llist llst)
  */
 bool llist_isempty (llist llst)
 {
-    
+    return llst == NULL || llst->length == 0;
 }
 
 /**
@@ -207,5 +249,14 @@ bool llist_isempty (llist llst)
  */
 void llist_delete (llist *llst)
 {
-    
+    if (llist_isempty(*llst))
+        return;
+    _llist_node next_node = (*llst)->start;
+    while (next_node != NULL) {
+        // TODO: L257: SIGABRT fix
+        free (next_node);
+        next_node = next_node->next;
+    }
+    free (*llst);
+    *llst = NULL;
 }
