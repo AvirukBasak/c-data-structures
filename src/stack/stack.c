@@ -112,8 +112,8 @@ bool stack_print (stack stk)
         return false;
     if (stk->element == NULL)
         return false;
-    for (uint64_t i = 0; i < stk->length; i++) {
-        printf ("%ld%s", stk->element[i], i == stk->top ? ":TOP" : " ");
+    for (uint64_t i = stk->length - 1; i >= 0 && i < (uint64_t)(-1); i--) {
+        printf ("%s%ld ", i == stk->length - 1 ? "TOP:" : "", stk->element[i]);
     }
     printf ("\n");
     return true;
