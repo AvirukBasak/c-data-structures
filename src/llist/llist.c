@@ -49,13 +49,12 @@ bool llist_push (llist llst, int64_t element)
     _llist_node newnode = malloc (1 * sizeof (_llist_node));
     if (newnode == NULL)
         return false;
-    if (llst->length == 0)
+    if (llst->length == 0) {
         llst->start = newnode;
-    if (llst->length > 0) {
-        newnode->prev = llst->end;
-        llst->end->next = newnode;
-    } else {
         newnode->prev = NULL;
+    } else if (llst->length > 0) {
+        llst->end->next = newnode;
+        newnode->prev = llst->end;
     }
     newnode->next = NULL;
     newnode->element = element;
@@ -87,9 +86,10 @@ int64_t llist_pop (llist llst)
         return LLIST_UNDERFLOW;
     _llist_node node_to_pop = llst->end;
     int64_t return_val = node_to_pop->element;
-    llst->end->prev->next = NULL;
-    llst->end = llst->end->prev;
+    node_to_pop->prev->next = NULL;
+    llst->end = node_to_pop->prev;
     free (node_to_pop);
+    llst->length--;
     return return_val;
 }
 
@@ -154,7 +154,7 @@ int64_t llist_remove (llist llst, uint64_t index)
 /**
  * @brief Gets value from an index of llist
  *
- * If index < 0, returns LLIST_UNDERFLOW = 0x0123456789abcdeful
+ * If llist_isempty (), returns LLIST_UNDERFLOW = 0x0123456789abcdeful
  * if index > llst->length, returns LLIST_OUTOFBOUNDS = 0xfedcba9876543210ul
  *
  * There's no way to be sure if any those error values were returned as a
@@ -167,12 +167,12 @@ int64_t llist_remove (llist llst, uint64_t index)
  */
 int64_t llist_get (llist llst, uint64_t index)
 {
-    if (llist_isempty(llst) || index < 0)
+    if (llist_isempty(llst))
         return LLIST_UNDERFLOW;
-    if (index > llst->length)
+    if (index > llst->length - 1)
         return LLIST_OUTOFBOUNDS;
     _llist_node next_node = llst->start;
-    for (uint64_t i = 0; i < llst->length; i++) {
+    for (uint64_t i = 0; next_node != NULL; i++) {
         if (i != index)
             next_node = next_node->next;
         else
@@ -191,12 +191,12 @@ int64_t llist_get (llist llst, uint64_t index)
  */
 bool llist_set (llist llst, uint64_t index, int64_t value)
 {
-    if (llist_isempty(llst) || index < 0)
+    if (llist_isempty(llst))
         return false;
     if (index > llst->length)
         return false;
     _llist_node next_node = llst->start;
-    for (uint64_t i = 0; i < llst->length; i++) {
+    for (uint64_t i = 0; next_node != NULL; i++) {
         if (i != index)
             next_node = next_node->next;
         else
@@ -216,6 +216,13 @@ bool llist_print (llist llst)
     if (llist_isempty(llst))
         return false;
     _llist_node next_node = llst->start;
+    /* TODO: unpredictable output fix
+     * Before set: 45 25 19 38 90 3003619476479443201 47 36
+     * Value at i4 = 90
+     * After set: 45 25 19 38 474 3003619476479443201 47 36
+     *
+     * Output likely will change depending on unknown factors
+     */
     while (next_node != NULL) {
         printf ("%ld ", next_node->element);
         next_node = next_node->next;
