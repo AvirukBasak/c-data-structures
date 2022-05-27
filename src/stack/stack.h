@@ -1,6 +1,8 @@
 # ifndef STACK_H
 # define STACK_H 1
 
+# include <stdlib.h>
+# include <inttypes.h>
 # include <stdint.h>
 # include <stdbool.h>
 

@@ -1,5 +1,3 @@
-# include <stdlib.h>
-
 # include "stack.h"
 
 /**
@@ -113,7 +111,7 @@ bool stack_print (stack stk)
     if (stk->element == NULL)
         return false;
     for (uint64_t i = stk->length - 1; i >= 0 && i < (uint64_t)(-1); i--) {
-        printf ("%s%ld ", i == stk->length - 1 ? "TOP:" : "", stk->element[i]);
+        printf ("%s%" PRIu64 " ", i == stk->length - 1 ? "TOP:" : "", stk->element[i]);
     }
     printf ("\n");
     return true;

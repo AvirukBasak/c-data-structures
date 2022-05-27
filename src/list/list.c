@@ -1,5 +1,3 @@
-# include <stdlib.h>
-
 # include "list.h"
 
 /**
@@ -190,7 +188,7 @@ bool list_print (list lst)
     if (lst->element == NULL)
         return false;
     for (uint64_t i = 0; i < lst->length; i++) {
-        printf ("%ld ", lst->element[i]);
+        printf ("%" PRIu64 " ", lst->element[i]);
     }
     printf ("\n");
     return true;

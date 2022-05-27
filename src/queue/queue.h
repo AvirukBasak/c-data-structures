@@ -1,6 +1,8 @@
 # ifndef QUEUE_H
 # define QUEUE_H 1
 
+# include <stdlib.h>
+# include <inttypes.h>
 # include <stdint.h>
 # include <stdbool.h>
 

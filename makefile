@@ -66,7 +66,7 @@ make_rel_path:
 REL_PATH = $(BIN_DIR)/rel/$(src)
 
 # compile source to bin path
-build: src_set clscr make_rel_path
+build: src_set make_rel_path
 	mkdir -p $(BIN_DIR)/rel
 	$(CC) $(REL_FLAGS) $(SRC_DIR)/$(src)/*.c -o $(REL_PATH)
 

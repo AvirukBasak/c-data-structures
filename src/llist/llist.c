@@ -1,5 +1,3 @@
-# include <stdlib.h>
-
 # include "llist.h"
 
 /**
@@ -199,8 +197,10 @@ bool llist_set (llist llst, uint64_t index, int64_t value)
     for (uint64_t i = 0; next_node != NULL; i++) {
         if (i != index)
             next_node = next_node->next;
-        else
+        else {
             next_node->element = value;
+            break;
+        }
     }
     return true;
 }
@@ -224,7 +224,7 @@ bool llist_print (llist llst)
      * Output likely will change depending on unknown factors
      */
     while (next_node != NULL) {
-        printf ("%ld ", next_node->element);
+        printf ("%" PRIu64 " ", next_node->element);
         next_node = next_node->next;
     }
     printf ("\n");
@@ -260,7 +260,7 @@ void llist_delete (llist *llst)
         return;
     _llist_node next_node = (*llst)->start;
     while (next_node != NULL) {
-        // TODO: L257: SIGABRT fix
+        // TODO: L264: SIGABRT fix
         free (next_node);
         next_node = next_node->next;
     }
