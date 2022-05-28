@@ -9,7 +9,7 @@
  */
 llist new_llist ()
 {
-    llist llst = malloc (1 * sizeof (llist));
+    llist llst = malloc (1 * sizeof (struct _llist_metanode));
     if (llst == NULL)
         return NULL;
     llst->start = NULL;
@@ -44,7 +44,7 @@ bool llist_push (llist llst, int64_t element)
 {
     if (llst == NULL)
         return false;
-    _llist_node newnode = malloc (1 * sizeof (_llist_node));
+    _llist_node newnode = malloc (1 * sizeof (struct _llist_node));
     if (newnode == NULL)
         return false;
     if (llst->length == 0) {
@@ -216,13 +216,6 @@ bool llist_print (llist llst)
     if (llist_isempty(llst))
         return false;
     _llist_node next_node = llst->start;
-    /* TODO: unpredictable output fix
-     * Before set: 45 25 19 38 90 3003619476479443201 47 36
-     * Value at i4 = 90
-     * After set: 45 25 19 38 474 3003619476479443201 47 36
-     *
-     * Output likely will change depending on unknown factors
-     */
     while (next_node != NULL) {
         printf ("%" PRId64 " ", next_node->element);
         next_node = next_node->next;
@@ -262,7 +255,6 @@ void llist_delete (llist *llst)
     _llist_node bkp_node;
     while (next_node != NULL) {
         bkp_node = next_node->next;
-        // TODO: L266: SIGABRT fix
         free (next_node);
         next_node = bkp_node;
     }
