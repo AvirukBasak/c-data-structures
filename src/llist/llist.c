@@ -224,7 +224,7 @@ bool llist_print (llist llst)
      * Output likely will change depending on unknown factors
      */
     while (next_node != NULL) {
-        printf ("%" PRIu64 " ", next_node->element);
+        printf ("%" PRId64 " ", next_node->element);
         next_node = next_node->next;
     }
     printf ("\n");
