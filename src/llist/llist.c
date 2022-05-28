@@ -261,8 +261,8 @@ void llist_delete (llist *llst)
     _llist_node next_node = (*llst)->start;
     _llist_node bkp_node;
     while (next_node != NULL) {
-        // TODO: L264: SIGABRT fix
         bkp_node = next_node->next;
+        // TODO: L266: SIGABRT fix
         free (next_node);
         next_node = bkp_node;
     }
