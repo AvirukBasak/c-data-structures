@@ -118,7 +118,7 @@ bool queue_print (queue que)
     uint64_t i = que->front;
     printf ("FRONT:");
     for ( ; i < que->rear; i++) {
-        printf ("%" PRIu64 " ", que->element[i]);
+        printf ("%" PRId64 " ", que->element[i]);
     }
     printf ("%ld:REAR\n", que->element[i]);
     return true;

@@ -188,7 +188,7 @@ bool list_print (list lst)
     if (lst->element == NULL)
         return false;
     for (uint64_t i = 0; i < lst->length; i++) {
-        printf ("%" PRIu64 " ", lst->element[i]);
+        printf ("%" PRId64 " ", lst->element[i]);
     }
     printf ("\n");
     return true;
