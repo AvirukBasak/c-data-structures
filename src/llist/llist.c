@@ -125,7 +125,33 @@ int64_t llist_peek (llist llst)
  */
 bool llist_insert (llist llst, uint64_t index, int64_t element)
 {
-    return false;
+    if (llst == NULL)
+        return false;
+    if (index > llst->length)
+        return false;
+    _llist_node newnode = malloc (1 * sizeof (struct _llist_node));
+    if (newnode == NULL)
+        return false;
+    if (index == llst->length)
+        return llist_append (llst, element);
+    _llist_node next_node = llst->start;
+    for (uint64_t i = 0; next_node != NULL; i++) {
+        if (i != index)
+            next_node = next_node->next;
+        else
+            break;
+    }
+    _llist_node prev_node = next_node->prev;
+    if (prev_node == NULL)
+        llst->start = newnode;
+    else
+        prev_node->next = newnode;
+    newnode->prev = prev_node;
+    newnode->next = next_node;
+    next_node->prev = newnode;
+    newnode->element = element;
+    llst->length++;
+    return true;
 }
 
 /**
