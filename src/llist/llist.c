@@ -34,13 +34,13 @@ uint64_t llist_getlen (llist llst)
 }
 
 /**
- * @brief Pushes a value to the llist and returns true.
+ * @brief Appends a value to the llist and returns true.
  *
  * @param llist Pointer to llist struct
  * @param int64_t Value to push
  * @return bool -- true if successful
  */
-bool llist_push (llist llst, int64_t element)
+bool llist_append (llist llst, int64_t element)
 {
     if (llst == NULL)
         return false;
@@ -66,14 +66,12 @@ bool llist_push (llist llst, int64_t element)
  *
  * If pop fails, LLIST_UNDERFLOW  value is returned.
  *
- * When last element of llist gets popped, consecutive llist_pop calls
- * will return LLIST_UNDERFLOW.
+ * If llist_isempty (), returns LLIST_UNDERFLOW = 0x0123456789abcdeful
+ * if index > llst->length, returns LLIST_OUTOFBOUNDS = 0xfedcba9876543210ul
  *
  * There's no way to be sure that LLIST_UNDERFLOW value was returned as a
  * result of error, or if that exact number had actually been popped from
  * the llist.
- *
- * Thus, you should know: LLIST_UNDERFLOW = 0x0123456789abcdeful
  *
  * @param llist Pointer to llist struct
  * @return int64_t -- Popped value, if failed, LLIST_UNDERFLOW  is returned
@@ -131,14 +129,12 @@ bool llist_insert (llist llst, uint64_t index, int64_t element)
  *
  * If remove fails, LLIST_UNDERFLOW  value is returned.
  *
- * When last element of llist gets removed, consecutive llist_remove calls
- * will return LLIST_UNDERFLOW.
+ * If llist_isempty (), returns LLIST_UNDERFLOW = 0x0123456789abcdeful
+ * if index > llst->length, returns LLIST_OUTOFBOUNDS = 0xfedcba9876543210ul
  *
  * There's no way to be sure that LLIST_UNDERFLOW value was returned as a
  * result of error, or if that exact number had actually been removed from
  * the llist.
- *
- * Thus, you should know: LLIST_UNDERFLOW = 0x0123456789abcdeful
  *
  * @param llist Pointer to llist struct
  * @param uint64_t Index from where element is to be removed
