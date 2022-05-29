@@ -82,8 +82,12 @@ int64_t llist_pop (llist llst)
         return LLIST_UNDERFLOW;
     _llist_node node_to_pop = llst->end;
     int64_t return_val = node_to_pop->element;
-    node_to_pop->prev->next = NULL;
-    llst->end = node_to_pop->prev;
+    _llist_node prev_node = node_to_pop->prev;
+    if (prev_node == NULL)
+        llst->start = NULL;
+    else
+        prev_node->next = NULL;
+    llst->end = prev_node;
     free (node_to_pop);
     llst->length--;
     return return_val;
