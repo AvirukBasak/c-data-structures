@@ -30,7 +30,7 @@ typedef struct _llist_node {
  *
  * //functions
  * uint64_t llist_getlen (llist llst);
- * bool llist_push (llist llst, int64_t element);
+ * bool llist_append (llist llst, int64_t element);
  * int64_t llist_pop (llist llst);
  * int64_t llist_peek (llist llst);
  * bool llist_insert (llist llst, uint64_t index, int64_t element);
@@ -70,13 +70,13 @@ llist new_llist ();
 uint64_t llist_getlen (llist llst);
 
 /**
- * @brief Pushes a value to the llist and returns true.
+ * @brief Appends a value to the llist and returns true.
  *
  * @param llist Pointer to llist struct
  * @param int64_t Value to push
  * @return bool -- true if successful
  */
-bool llist_push (llist llst, int64_t element);
+bool llist_append (llist llst, int64_t element);
 
 /**
  * @brief Pops a value from llist and returns it.

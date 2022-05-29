@@ -5,14 +5,14 @@ int main ()
 {
     llist llst = new_llist ();
 
-    llist_push (llst, 45);
-    llist_push (llst, 25);
-    llist_push (llst, 19);
-    llist_push (llst, 38);
-    llist_push (llst, 90);
-    llist_push (llst, 13);
-    llist_push (llst, 47);
-    llist_push (llst, 36);
+    llist_append (llst, 45);
+    llist_append (llst, 25);
+    llist_append (llst, 19);
+    llist_append (llst, 38);
+    llist_append (llst, 90);
+    llist_append (llst, 13);
+    llist_append (llst, 47);
+    llist_append (llst, 36);
 
     printf ("Before set: ");
     llist_print (llst);
