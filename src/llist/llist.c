@@ -255,6 +255,25 @@ bool llist_set (llist llst, uint64_t index, int64_t value)
 }
 
 /**
+ * @brief Loop through llist and take action using a callback function
+ *
+ * @param llist Pointer to llist struct
+ * @param callback Function pointer to a function. The arguments of the function is an index and its element.
+ * @return bool -- false if failed
+ */
+bool llist_foreach (llist llst, void (*callback)(int64_t i, int64_t element))
+{
+    if (llist_isempty(llst))
+        return false;
+    _llist_node next_node = llst->start;
+    for (uint64_t i = 0; next_node != NULL; i++) {
+        callback (i, next_node->element);
+        next_node = next_node->next;
+    }
+    return true;
+}
+
+/**
  * @brief Prints llist content
  *
  * @param llist Pointer to llist struct

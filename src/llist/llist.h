@@ -171,6 +171,15 @@ int64_t llist_get (llist llst, uint64_t index);
 bool llist_set (llist llst, uint64_t index, int64_t value);
 
 /**
+ * @brief Loop through llist and take action using a callback function
+ *
+ * @param llist Pointer to llist struct
+ * @param callback Function pointer to a function. The arguments of the function is an index and its element.
+ * @return bool -- false if failed
+ */
+bool llist_foreach (llist llst, void (*callback)(int64_t i, int64_t element));
+
+/**
  * @brief Prints llist content
  *
  * @param llist Pointer to llist struct
