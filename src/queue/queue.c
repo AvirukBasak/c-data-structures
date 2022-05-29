@@ -9,7 +9,7 @@
  */
 queue new_queue ()
 {
-    queue que = malloc (1 * sizeof (queue));
+    queue que = malloc (1 * sizeof (struct _queue));
     if (que == NULL)
         return NULL;
     que->element = NULL;

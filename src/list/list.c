@@ -9,7 +9,7 @@
  */
 list new_list ()
 {
-    list lst = malloc (1 * sizeof (list));
+    list lst = malloc (1 * sizeof (struct _list));
     if (lst == NULL)
         return NULL;
     lst->element = NULL;

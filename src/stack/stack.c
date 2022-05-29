@@ -9,7 +9,7 @@
  */
 stack new_stack ()
 {
-    stack stk = malloc (1 * sizeof (stack));
+    stack stk = malloc (1 * sizeof (struct _stack));
     if (stk == NULL)
         return NULL;
     stk->element = NULL;
