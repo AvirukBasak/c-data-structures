@@ -172,7 +172,30 @@ bool llist_insert (llist llst, uint64_t index, int64_t element)
  */
 int64_t llist_remove (llist llst, uint64_t index)
 {
-    return 0;
+    if (llist_isempty(llst))
+        return LLIST_UNDERFLOW;
+    if (index > llst->length - 1)
+        return LLIST_OUTOFBOUNDS;
+    if (index == llst->length - 1)
+        return llist_pop (llst);
+    _llist_node next_node = llst->start;
+    for (uint64_t i = 0; next_node != NULL; i++) {
+        if (i != index)
+            next_node = next_node->next;
+        else
+            break;
+    }
+    _llist_node node_to_rm = next_node;
+    int64_t return_val = node_to_rm->element;
+    _llist_node prev_node = node_to_rm->prev;
+    if (prev_node == NULL)
+        llst->start = node_to_rm->next;
+    else
+        prev_node->next = node_to_rm->next;
+    node_to_rm->next->prev = prev_node;
+    free (node_to_rm);
+    llst->length--;
+    return return_val;
 }
 
 /**
