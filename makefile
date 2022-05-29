@@ -52,21 +52,21 @@ ifndef src
 endif
 
 # create binary path
-make_dbg_path:
+make_dbg_path: src_set
 DBG_PATH = $(BIN_DIR)/dbg/dbg-$(src)
 
 # creates debug build and launches in gdb
-debug: src_set clscr make_dbg_path
+debug: clscr make_dbg_path
 	mkdir -p $(BIN_DIR)/dbg
 	$(CC) $(DBG_FLAGS) $(SRC_DIR)/$(src)/*.c -o $(DBG_PATH)
 	$(DBG) $(DBG_PATH)
 
 # create binary path
-make_rel_path:
+make_rel_path: src_set
 REL_PATH = $(BIN_DIR)/rel/$(src)
 
 # compile source to bin path
-build: src_set make_rel_path
+build: make_rel_path
 	mkdir -p $(BIN_DIR)/rel
 	$(CC) $(REL_FLAGS) $(SRC_DIR)/$(src)/*.c -o $(REL_PATH)
 
@@ -82,8 +82,12 @@ bin_prefix = $(shell echo $(bin) | head -c 4)
 # run source
 run: bin_set
 ifeq ($(bin_prefix), dbg-)
+	@mkdir -p $(BIN_DIR)/dbg
+	@$(CC) $(DBG_FLAGS) $(SRC_DIR)/$(bin)/*.c -o $(BIN_DIR)/dbg/$(bin)
 	@$(BIN_DIR)/dbg/$(bin)
 else
+	@mkdir -p $(BIN_DIR)/rel
+	@$(CC) $(REL_FLAGS) $(SRC_DIR)/$(bin)/*.c -o $(BIN_DIR)/rel/$(bin)
 	@$(BIN_DIR)/rel/$(bin)
 endif
 
