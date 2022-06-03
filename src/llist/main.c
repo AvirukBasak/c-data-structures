@@ -1,9 +1,9 @@
 # include <stdio.h>
 # include "llist.h"
 
-void callback (int64_t i, int64_t e)
+void callback (int64_t i, int64_t *e)
 {
-    printf ("i = %ld: %ld\n", i, e);
+    printf ("i = %ld: %ld\n", i, *e);
 }
 
 int main ()
