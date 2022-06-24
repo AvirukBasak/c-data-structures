@@ -10,13 +10,13 @@
 # define TREE_ERROR 0x0123456789abcdeful
 
 typedef char* string;
-
 typedef struct _tree_node* tree;
 
 typedef struct _tree_node {
     string name;
     int64_t value;
     tree parent;
+    uint64_t childcount;
     tree *children;
 } _tree_node;
 

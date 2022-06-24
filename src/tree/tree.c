@@ -1,5 +1,8 @@
 # include "tree.h"
 
+tree tree_glvnip (tree node, const string path, uint64_t *index);
+tree tree_mknode (tree tr, const string path);
+
 /**
  * @brief Allocates a new tree in the heap
  *
@@ -16,6 +19,7 @@ tree new_tree()
     root->value = 0;
     root->parent = NULL;
     root->children = NULL;
+    root->childcount = 0;
     return root;
 }
 
@@ -30,7 +34,6 @@ bool tree_setdata (tree tr, const string path, int64_t val)
 {
     tree node = tree_getnode (tr, path);
     if (!node) {
-        tree tree_mknode (tree tr, const string path);
         node = tree_mknode (tr, path);
         if (!node)
             return false;
@@ -88,20 +91,83 @@ bool tree_setnode (tree tr, const string path, tree node2)
  * @brief Gets target node
  * @param tr The tree root
  * @param path Path to target node
- * @return tree
+ * @return tree Returns NULL if path doesn't exist
  */
-tree tree_getnode (tree tr, const string path)
+tree tree_getnode (tree node, const string path)
 {
     string token = strtok (path, "/");
     while (token) {
-        token = strtok (path, "/");
+        uint64_t i = 0;
+        for (i = 0; i < node->childcount; i++) {
+            if (!strcmp (node->children[i]->name, token)) {
+                token = strtok (NULL, "/");
+                node = node->children[i];
+                break;
+            }
+        }
+        if (!node->parent->children[i -1])
+            return NULL;
     }
-    return NULL;
+    return node;
 }
 
+/**
+ * @brief Returns last valid node in path string: tree_get_last_valid_node_in_path
+ * @param node The node from where to traverse tree
+ * @param path Path to node
+ * @param index Pointer to uint64_t variable, holds index of returned node in children array of the parent
+ */
+tree tree_glvnip (tree node, const string path, uint64_t *index)
+{
+    string token = strtok (path, "/");
+    while (token) {
+        uint64_t i = 0;
+        for (i = 0; i < node->childcount; i++) {
+            if (!strcmp (node->children[i]->name, token)) {
+                token = strtok (NULL, "/");
+                node = node->children[i];
+                *index = i;
+                break;
+            }
+        }
+        if (!node->parent->children[i -1]) {
+            *index = TREE_ERROR;
+            break;
+        }
+    }
+    return node;
+}
+
+/**
+ * @brief Creates nodes based on path string, already created nodes are unaffected
+ * @return The last newly created node
+ */
 tree tree_mknode (tree tr, const string path)
 {
-    return NULL;
+    uint64_t index;
+    tree node = tree_glvnip (tr, path, &index);
+    if (!node)
+        return NULL;
+    // tree parent = node->parent;
+    string token = strtok (path, "/");
+    bool flag_start = false;
+    while (token) {
+        if (!flag_start && strcmp (token, node->name)) {
+            flag_start = true;
+        }
+        if (flag_start) {
+            node->children = realloc (node->children, sizeof (struct _tree_node) * ++(node->childcount));
+            node->children[node->childcount -1] = new_tree();
+            tree newnode = node->children[node->childcount -1];
+            newnode->name = token;
+            newnode->parent = node;
+            node = newnode;
+        }
+        token = strtok (NULL, "/");
+    }
+    if (!flag_start)
+        return NULL;
+    return node;
 }
 
 /**
@@ -135,7 +201,7 @@ bool tree_rmnode (tree tr, const string path)
 void tree_delete (tree *root)
 {
     if ((*root)->children) {
-        for (uint64_t i = 0; (*root)->children[i] != NULL; i++) {
+        for (uint64_t i = 0; i < (*root)->childcount; i++) {
             tree_delete (&((*root)->children[i]));
         }
     } else {
