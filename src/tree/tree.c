@@ -29,8 +29,12 @@ tree new_tree()
 bool tree_setdata (tree tr, const string path, int64_t val)
 {
     tree node = tree_getnode (tr, path);
-    if (!node)
-        return false;
+    if (!node) {
+        tree tree_mknode (tree tr, const string path);
+        node = tree_mknode (tr, path);
+        if (!node)
+            return false;
+    }
     node->value = val;
     return true;
 }
@@ -72,17 +76,31 @@ bool tree_setnode (tree tr, const string path, tree node2)
     tree node = tree_getnode (tr, path);
     if (!node)
         return false;
-    node = node2;
+    // name and parent of node unchanged
+    node->value = node2->value;
+    if (node->children)
+        free (node->children);
+    node->children = node2->children;
     return true;
 }
 
+/**
+ * @brief Gets target node
+ * @param tr The tree root
+ * @param path Path to target node
+ * @return tree
+ */
 tree tree_getnode (tree tr, const string path)
 {
-    token = strtok (path, "/");
+    string token = strtok (path, "/");
     while (token) {
-        
         token = strtok (path, "/");
     }
+    return NULL;
+}
+
+tree tree_mknode (tree tr, const string path)
+{
     return NULL;
 }
 
@@ -118,7 +136,7 @@ void tree_delete (tree *root)
 {
     if ((*root)->children) {
         for (uint64_t i = 0; (*root)->children[i] != NULL; i++) {
-            delete_tree (&((*root)->children[i]));
+            tree_delete (&((*root)->children[i]));
         }
     } else {
         free (*root);

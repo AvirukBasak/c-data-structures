@@ -11,14 +11,14 @@
 
 typedef char* string;
 
+typedef struct _tree_node* tree;
+
 typedef struct _tree_node {
     string name;
     int64_t value;
-    struct _tree_node *parent;
-    struct _tree_node *(*children);
+    tree parent;
+    tree *children;
 } _tree_node;
-
-typedef _tree_node* tree;
 
 /**
  * @brief Allocates a new tree in the heap
@@ -65,6 +65,14 @@ int64_t tree_getdata (tree tr, const string path);
  * @return bool True if successful
  */
 bool tree_setnode (tree tr, const string path, tree node2);
+
+/**
+ * @brief Gets target node
+ * @param tr The tree root
+ * @param path Path to target node
+ * @return tree
+ */
+tree tree_getnode (tree tr, const string path);
 
 /**
  * @brief Deletes a node
